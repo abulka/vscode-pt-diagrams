@@ -6,6 +6,9 @@
 			"include": "#sections"
 		},
 		{
+			"include": "#subSections"
+		},
+		{
 			"include": "#keywords"
 		},
 		{
@@ -47,7 +50,15 @@
 			"patterns": [
 				{
 					"name": "keyword.section.ptd",
-					"match": "\\b(Diagram|Scope|Files|Variables|Functions|Classes|Class Relationships|Imports|Use Cases|Scenario|Attributes|Methods|Interfaces)\\b"
+					"match": "^(Scope|Files|Classes|Class Relationships|Imports|Use Cases):"
+				}
+			]
+		},
+		"subSections": {
+			"patterns": [
+				{
+					"name": "keyword.subSection.ptd",
+					"match": "^\\s+(Variables|Functions|Classes|Scenario|Attributes|Methods|Interfaces):"
 				}
 			]
 		},
