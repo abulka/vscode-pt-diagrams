@@ -1,6 +1,9 @@
-# vscode-pt-diagrams
+# Plain Text Diagram - Syntax Highlighting 
 
 This extension provides syntax highlighting for PT Diagrams, a simple language for creating diagrams in a text editor. 
+
+Search for `plain-text-diagrams` on the Visual Studio Code Marketplace to install.
+
 ## Features
 
 Syntax highlighting for `.ptd` files.
