@@ -1,8 +1,8 @@
 {
-  "name": "vscode-pt-diagrams",
-  "displayName": "vscode-pt-diagrams",
-  "description": "Syntax Highlighting for .ptd files",
-  "version": "0.0.2",
+  "name": "plain-text-diagrams",
+  "displayName": "plain-text-diagrams",
+  "description": "Syntax Highlighting for .ptd (Plain Text Diagram) files",
+  "version": "0.0.3",
   "engines": {
     "vscode": "^1.96.0"
   },
