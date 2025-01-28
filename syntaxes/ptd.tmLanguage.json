@@ -2,183 +2,217 @@
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
 	"name": "Plain Text Diagram",
 	"patterns": [
-	  {
-		"include": "#keywords"
-	  },
-	  {
-		"include": "#methodCalls"
-	  },
-	  {
-		"include": "#imports"
-	  },
-	  {
-		"include": "#typeDeclarations"
-	  },
-	  {
-		"include": "#descriptions"
-	  },
-	  {
-		"include": "#comments"
-	  },
-	  {
-		"include": "#labels"
-	  },
-	  {
-		"include": "#relationships"
-	  },
-	  {
-		"include": "#classes"
-	  },
-	  {
-		"include": "#variables"
-	  },
-	  {
-		"include": "#numbers"
-	  },
-	  {
-		"include": "#operators"
-	  },
-	  {
-		"include": "#types"
-	  }
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#methodCalls"
+		},
+		{
+			"include": "#imports"
+		},
+		{
+			"include": "#typeDeclarations"
+		},
+		{
+			"include": "#descriptions"
+		},
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#labels"
+		},
+		{
+			"include": "#relationships"
+		},
+		{
+			"include": "#classes"
+		},
+		{
+			"include": "#variables"
+		},
+		{
+			"include": "#numbers"
+		},
+		{
+			"include": "#operators"
+		},
+		{
+			"include": "#types"
+		}
 	],
 	"repository": {
-	  "keywords": {
-		"patterns": [{
-		  "name": "keyword.control.ptd",
-		  "match": "\\b(Diagram|Scope|Files|Variables|Functions|Classes|Class Relationships|Imports|Use Cases|Scenario|Attributes|Methods|Interfaces|file|interface|class|function|inherits|implements|extends|override)\\b"
-		}]
-	  },
-	  "types": {
-		"patterns": [
-		  {
-			"name": "support.type.primitive.ptd",
-			"match": "\\b(string|number|boolean|void)\\b"
-		  },
-		  {
-			"name": "entity.name.type.ptd",
-			"match": "\\b[A-Z][a-zA-Z0-9]*\\b"
-		  }
-		]
-	  },
-	  "imports": {
-		"patterns": [
-		  {
-			"match": "\\b(class|interface|function)\\s+([A-Za-z][a-zA-Z0-9]*)\\b",
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control.ptd",
+					"match": "\\b(Diagram|Scope|Files|Variables|Functions|Classes|Class Relationships|Imports|Use Cases|Scenario|Attributes|Methods|Interfaces|file|interface|class|function|inherits|implements|extends|override)\\b"
+				}
+			]
+		},
+		"types": {
+			"patterns": [
+				{
+					"name": "support.type.primitive.ptd",
+					"match": "\\b(string|number|boolean|void)\\b"
+				},
+				{
+					"name": "entity.name.type.ptd",
+					"match": "\\b[A-Z][a-zA-Z0-9]*\\b"
+				}
+			]
+		},
+		"imports": {
+			"patterns": [
+				{
+					"match": "\\b(class|interface|function)\\s+([A-Za-z][a-zA-Z0-9]*)\\b",
+					"captures": {
+						"1": {
+							"name": "keyword.control.ptd"
+						},
+						"2": {
+							"name": "entity.name.type.ptd"
+						}
+					}
+				},
+				{
+					"match": "\\b([A-Z][a-zA-Z0-9]*)\\.ts\\b",
+					"name": "string.filepath.ptd"
+				},
+				{
+					"match": "(?<=files:\\s)([a-zA-Z0-9_]+\\.ts)(,\\s[a-zA-Z0-9_]+\\.ts)*",
+					"name": "string.filepath.ptd"
+				}
+			]
+		},
+		"typeDeclarations": {
+			"patterns": [
+				{
+					"match": ":\\s*(number|string|boolean|void)\\b",
+					"captures": {
+						"1": {
+							"name": "support.type.primitive.ptd"
+						}
+					}
+				},
+				{
+					"match": ":\\s*([A-Z][a-zA-Z0-9]*)\\b",
+					"captures": {
+						"1": {
+							"name": "entity.name.type.ptd"
+						}
+					}
+				},
+				{
+					"match": "@(override)\\b",
+					"captures": {
+						"1": {
+							"name": "keyword.control.ptd"
+						}
+					}
+				}
+			]
+		},
+		"methodCalls": {
+			"patterns": [
+				{
+					"match": "(?:(?:->\\s*)|\\s+)([a-zA-Z][a-zA-Z0-9]*)\\(([^\\)]*)\\)\\s*(\\[class\\s+[A-Z][a-zA-Z0-9]*,\\s*[A-Z][a-zA-Z0-9]*\\.ts\\])",
+					"captures": {
+						"1": {
+							"name": "entity.name.function.ptd"
+						},
+						"2": {
+							"name": "variable.parameter.ptd"
+						},
+						"3": {
+							"patterns": [
+								{
+									"include": "#classReference"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"classReference": {
+			"match": "\\[class\\s+([A-Z][a-zA-Z0-9]*),\\s*([A-Z][a-zA-Z0-9]*\\.ts)\\]",
 			"captures": {
-			  "1": { "name": "keyword.control.ptd" },
-			  "2": { "name": "entity.name.type.ptd" }
+				"1": {
+					"name": "entity.name.type.class.ptd"
+				},
+				"2": {
+					"name": "string.filepath.ptd"
+				}
 			}
-		  },
-		  {
-			"match": "\\b([A-Z][a-zA-Z0-9]*)\\.ts\\b",
-			"name": "string.filepath.ptd"
-		  }
-		]
-	  },
-	  "typeDeclarations": {
-		"patterns": [
-		  {
-			"match": ":\\s*(number|string|boolean|void)\\b",
-			"captures": {
-			  "1": { "name": "support.type.primitive.ptd" }
-			}
-		  },
-		  {
-			"match": ":\\s*([A-Z][a-zA-Z0-9]*)\\b",
-			"captures": {
-			  "1": { "name": "entity.name.type.ptd" }
-			}
-		  },
-		  {
-			"match": "@(override)\\b",
-			"captures": {
-			  "1": { "name": "keyword.control.ptd" }
-			}
-		  }
-		]
-	  },
-	  "methodCalls": {
-		"patterns": [
-		  {
-			"match": "(?:(?:->\\s*)|\\s+)([a-zA-Z][a-zA-Z0-9]*)\\(([^\\)]*)\\)\\s*(\\[class\\s+[A-Z][a-zA-Z0-9]*,\\s*[A-Z][a-zA-Z0-9]*\\.ts\\])",
-			"captures": {
-			  "1": { "name": "entity.name.function.ptd" },
-			  "2": { "name": "variable.parameter.ptd" },
-			  "3": { "patterns": [{ "include": "#classReference" }] }
-			}
-		  }
-		]
-	  },
-	  "classReference": {
-		"match": "\\[class\\s+([A-Z][a-zA-Z0-9]*),\\s*([A-Z][a-zA-Z0-9]*\\.ts)\\]",
-		"captures": {
-		  "1": { "name": "entity.name.type.class.ptd" },
-		  "2": { "name": "string.filepath.ptd" }
+		},
+		"descriptions": {
+			"patterns": [
+				{
+					"name": "string.unquoted.description.ptd",
+					"begin": "(?<=description:\\s)",
+					"end": "$",
+					"patterns": [
+						{
+							"name": "text.plain.ptd",
+							"match": ".+"
+						}
+					]
+				},
+				{
+					"name": "string.unquoted.scenario.ptd",
+					"begin": "(?<=Scenario:\\s)",
+					"end": "$",
+					"patterns": [
+						{
+							"name": "text.plain.ptd",
+							"match": ".+"
+						}
+					]
+				}
+			]
+		},
+		"comments": {
+			"name": "comment.line.number-sign.ptd",
+			"match": "#.*$"
+		},
+		"labels": {
+			"name": "entity.name.label.ptd",
+			"match": "\\b(name|version|description|extends|implements|inherits|contains|creates|charges|diagnoses|uses)\\b"
+		},
+		"relationships": {
+			"patterns": [
+				{
+					"name": "keyword.operator.relationship.ptd",
+					"match": "-->"
+				},
+				{
+					"name": "meta.relationship.description.ptd",
+					"match": "(?<=-->\\s)[^(\\s]+(?=\\s|$)"
+				}
+			]
+		},
+		"variables": {
+			"patterns": [
+				{
+					"name": "variable.other.constant.ptd",
+					"match": "\\bconst\\s+([a-zA-Z][a-zA-Z0-9]*)\\b"
+				},
+				{
+					"name": "variable.other.ptd",
+					"match": "\\blet\\s+([a-zA-Z][a-zA-Z0-9]*)\\b"
+				}
+			]
+		},
+		"numbers": {
+			"name": "constant.numeric.ptd",
+			"match": "\\b\\d+(?:\\.\\d+)?\\b"
+		},
+		"operators": {
+			"name": "keyword.operator.ptd",
+			"match": "->|<|>|\\[|\\]|\\{|\\}|\\(|\\)|@|\\."
 		}
-	  },
-	  "descriptions": {
-		"patterns": [
-		  {
-			"name": "string.unquoted.description.ptd",
-			"begin": "(?<=description:\\s)",
-			"end": "$"
-		  },
-		  {
-			"name": "string.unquoted.scenario.ptd",
-			"begin": "(?<=Scenario:\\s)",
-			"end": "$"
-		  },
-		  {
-			"name": "string.unquoted.action.ptd",
-			"match": "(?<=->\\s)[^\\[\\]<>\\(\\)\\{\\}]+(?=\\s*(?:<|$))"
-		  },
-		  {
-			"name": "string.unquoted.return.ptd",
-			"match": "(?<=<\\s)[^\\[\\]<>\\(\\)\\{\\}]+(?=\\s*$)"
-		  }
-		]
-	  },
-	  "comments": {
-		"name": "comment.line.number-sign.ptd",
-		"match": "#.*$"
-	  },
-	  "labels": {
-		"name": "entity.name.label.ptd",
-		"match": "\\b(name|version|description|extends|implements|inherits|contains|creates|charges|diagnoses|uses)\\b"
-	  },
-	  "relationships": {
-		"patterns": [
-		  {
-			"name": "keyword.operator.relationship.ptd",
-			"match": "-->"
-		  },
-		  {
-			"name": "meta.relationship.description.ptd",
-			"match": "(?<=-->\\s)[^(\\s]+(?=\\s|$)"
-		  }
-		]
-	  },
-	  "variables": {
-		"patterns": [
-		  {
-			"name": "variable.other.constant.ptd",
-			"match": "\\bconst\\s+([a-zA-Z][a-zA-Z0-9]*)\\b"
-		  },
-		  {
-			"name": "variable.other.ptd",
-			"match": "\\blet\\s+([a-zA-Z][a-zA-Z0-9]*)\\b"
-		  }
-		]
-	  },
-	  "numbers": {
-		"name": "constant.numeric.ptd",
-		"match": "\\b\\d+(?:\\.\\d+)?\\b"
-	  },
-	  "operators": {
-		"name": "keyword.operator.ptd",
-		"match": "->|<|>|\\[|\\]|\\{|\\}|\\(|\\)|@|\\."
-	  }
 	},
 	"scopeName": "text.ptd"
-  }
+}
