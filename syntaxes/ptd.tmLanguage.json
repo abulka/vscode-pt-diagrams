@@ -6,6 +6,9 @@
 		"include": "#keywords"
 	  },
 	  {
+		"include": "#methodCalls"
+	  },
+	  {
 		"include": "#descriptions"
 	  },
 	  {
@@ -37,46 +40,47 @@
 	  "keywords": {
 		"patterns": [{
 		  "name": "keyword.control.ptd",
-		  "match": "\\b(Diagram|Scope|Files|Variables|Functions|Classes|Class Relationships|Imports|Use Cases|Scenario|Attributes|Methods|Interfaces|file|class|interface)\\b"
+		  "match": "\\b(Diagram|Scope|Files|Variables|Functions|Classes|Class Relationships|Imports|Use Cases|Scenario|Attributes|Methods|Interfaces|file|interface)\\b"
 		}]
+	  },
+	  "methodCalls": {
+		"patterns": [
+		  {
+			"match": "(?:->\\s*)([a-zA-Z][a-zA-Z0-9]*)\\(([^\\)]*)\\)\\s*(\\[class\\s+[A-Z][a-zA-Z0-9]*,\\s*[A-Z][a-zA-Z0-9]*\\.ts\\])",
+			"captures": {
+			  "1": { "name": "entity.name.function.ptd" },
+			  "2": { "name": "variable.parameter.ptd" },
+			  "3": { "patterns": [{ "include": "#classReference" }] }
+			}
+		  }
+		]
+	  },
+	  "classReference": {
+		"match": "\\[class\\s+([A-Z][a-zA-Z0-9]*),\\s*([A-Z][a-zA-Z0-9]*\\.ts)\\]",
+		"captures": {
+		  "1": { "name": "entity.name.type.class.ptd" },
+		  "2": { "name": "string.filepath.ptd" }
+		}
 	  },
 	  "descriptions": {
 		"patterns": [
 		  {
 			"name": "string.unquoted.description.ptd",
 			"begin": "(?<=description:\\s)",
-			"end": "$",
-			"patterns": [
-			  {
-				"include": "#inline-code"
-			  }
-			]
+			"end": "$"
+		  },
+		  {
+			"name": "string.unquoted.scenario.ptd",
+			"begin": "(?<=Scenario:\\s)",
+			"end": "$"
 		  },
 		  {
 			"name": "string.unquoted.action.ptd",
-			"match": "(?<=->\\s)[^\\[\\]<>\\(\\)\\{\\}]+(?=\\s*(?:<|$))",
-			"patterns": [
-			  {
-				"include": "#inline-code"
-			  }
-			]
+			"match": "(?<=->\\s)[^\\[\\]<>\\(\\)\\{\\}]+(?=\\s*(?:<|$))"
 		  },
 		  {
 			"name": "string.unquoted.return.ptd",
-			"match": "(?<=<\\s)[^\\[\\]<>\\(\\)\\{\\}]+(?=\\s*$)",
-			"patterns": [
-			  {
-				"include": "#inline-code"
-			  }
-			]
-		  }
-		]
-	  },
-	  "inline-code": {
-		"patterns": [
-		  {
-			"name": "variable.other.ptd",
-			"match": "\\b[a-zA-Z][a-zA-Z0-9]*\\b"
+			"match": "(?<=<\\s)[^\\[\\]<>\\(\\)\\{\\}]+(?=\\s*$)"
 		  }
 		]
 	  },
@@ -105,10 +109,6 @@
 		  {
 			"name": "entity.name.type.class.ptd",
 			"match": "\\b[A-Z][a-zA-Z0-9]*(?=\\.ts|\\s|$)"
-		  },
-		  {
-			"name": "entity.name.type.interface.ptd",
-			"match": "\\b[A-Z][a-zA-Z0-9]*(?=\\s*\\{)"
 		  }
 		]
 	  },
