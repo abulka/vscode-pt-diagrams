@@ -24,9 +24,6 @@
 		"include": "#classes"
 	  },
 	  {
-		"include": "#functions"
-	  },
-	  {
 		"include": "#variables"
 	  },
 	  {
@@ -46,7 +43,7 @@
 	  "methodCalls": {
 		"patterns": [
 		  {
-			"match": "(?:->\\s*)([a-zA-Z][a-zA-Z0-9]*)\\(([^\\)]*)\\)\\s*(\\[class\\s+[A-Z][a-zA-Z0-9]*,\\s*[A-Z][a-zA-Z0-9]*\\.ts\\])",
+			"match": "(?:(?:->\\s*)|\\s+)([a-zA-Z][a-zA-Z0-9]*)\\(([^\\)]*)\\)\\s*(\\[class\\s+[A-Z][a-zA-Z0-9]*,\\s*[A-Z][a-zA-Z0-9]*\\.ts\\])",
 			"captures": {
 			  "1": { "name": "entity.name.function.ptd" },
 			  "2": { "name": "variable.parameter.ptd" },
