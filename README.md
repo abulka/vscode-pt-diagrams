@@ -1,7 +1,6 @@
-# vscode-pt-diagrams README
+# vscode-pt-diagrams
 
-This is the README for your extension "vscode-pt-diagrams". After writing up a brief description, we recommend including the following sections.
-
+This extension provides syntax highlighting for PT Diagrams, a simple language for creating diagrams in a text editor. 
 ## Features
 
 Syntax highlighting for `.ptd` files.

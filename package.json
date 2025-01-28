@@ -19,8 +19,7 @@
     "grammars": [{
       "language": "ptd",
       "scopeName": "text.ptd",
-      "path": "./syntaxes/ptd.tmLanguage.json",
-      "pathX": "./syntaxes/ptd2.tmLanguage.json"
+      "path": "./syntaxes/ptd.tmLanguage.json"
     }],
     "themes": [
       {
@@ -29,5 +28,9 @@
         "path": "./themes/ptd-color-theme.json"
       }
     ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abulka/vscode-pt-diagrams"
   }
 }
