@@ -1,0 +1,25 @@
+{
+  "name": "vscode-pt-diagrams",
+  "displayName": "vscode-pt-diagrams",
+  "description": "Syntax Highlighting for .ptd files",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "ptd",
+      "aliases": ["Plain Text Diagram", "ptd"],
+      "extensions": [".ptd",".pt-diagram"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "ptd",
+      "scopeName": "text.ptd",
+      "path": "./syntaxes/ptd.tmLanguage.json"
+    }]
+  }
+}
