@@ -21,6 +21,13 @@
       "scopeName": "text.ptd",
       "path": "./syntaxes/ptd.tmLanguage.json",
       "pathX": "./syntaxes/ptd2.tmLanguage.json"
-    }]
+    }],
+    "themes": [
+      {
+        "label": "PTD Color Theme",
+        "uiTheme": "vs-dark",
+        "path": "./themes/ptd-color-theme.json"
+      }
+    ]
   }
 }

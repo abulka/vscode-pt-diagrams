@@ -42,6 +42,9 @@
 			"include": "#operators"
 		},
 		{
+			"include": "#filePaths"
+		},
+		{
 			"include": "#typeDeclarations"
 		}
 	],
@@ -50,7 +53,7 @@
 			"patterns": [
 				{
 					"name": "keyword.section.ptd",
-					"match": "^(Scope|Files|Classes|Class Relationships|Imports|Use Cases):"
+					"match": "^(Diagram|Files|Classes|Class Relationships|Imports|Use Cases):"
 				}
 			]
 		},
@@ -62,11 +65,19 @@
 				}
 			]
 		},
+		"filePaths": {
+			"patterns": [
+				{
+					"match": "(^\\s+file:\\s)([a-zA-Z0-9_]+\\.[a-zA-Z0-9]+)",
+					"name": "string.filepath.ptd"
+				}
+			]
+		},
 		"keywords": {
 			"patterns": [
 				{
 					"name": "keyword.control.ptd",
-					"match": "\\b(file|interface|class|function|inherits|implements|extends|override|contains|creates|uses)\\b"
+					"match": "\\b(interface|class|function|inherits|implements|extends|override|contains|creates|uses)\\b"
 				}
 			]
 		},
