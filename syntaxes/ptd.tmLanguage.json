@@ -3,6 +3,9 @@
 	"name": "Plain Text Diagram",
 	"patterns": [
 		{
+			"include": "#sections"
+		},
+		{
 			"include": "#keywords"
 		},
 		{
@@ -10,9 +13,6 @@
 		},
 		{
 			"include": "#imports"
-		},
-		{
-			"include": "#typeDeclarations"
 		},
 		{
 			"include": "#descriptions"
@@ -39,27 +39,23 @@
 			"include": "#operators"
 		},
 		{
-			"include": "#types"
+			"include": "#typeDeclarations"
 		}
 	],
 	"repository": {
+		"sections": {
+			"patterns": [
+				{
+					"name": "keyword.section.ptd",
+					"match": "\\b(Diagram|Scope|Files|Variables|Functions|Classes|Class Relationships|Imports|Use Cases|Scenario|Attributes|Methods|Interfaces)\\b"
+				}
+			]
+		},
 		"keywords": {
 			"patterns": [
 				{
 					"name": "keyword.control.ptd",
-					"match": "\\b(Diagram|Scope|Files|Variables|Functions|Classes|Class Relationships|Imports|Use Cases|Scenario|Attributes|Methods|Interfaces|file|interface|class|function|inherits|implements|extends|override)\\b"
-				}
-			]
-		},
-		"types": {
-			"patterns": [
-				{
-					"name": "support.type.primitive.ptd",
-					"match": "\\b(string|number|boolean|void)\\b"
-				},
-				{
-					"name": "entity.name.type.ptd",
-					"match": "\\b[A-Z][a-zA-Z0-9]*\\b"
+					"match": "\\b(file|interface|class|function|inherits|implements|extends|override|contains|creates|uses)\\b"
 				}
 			]
 		},
@@ -77,15 +73,15 @@
 					}
 				},
 				{
-					"match": "\\b([A-Z][a-zA-Z0-9]*)\\.ts\\b",
+					"match": "\\b([A-Z][a-zA-Z0-9]*)\\.[a-zA-Z0-9]+\\b",
 					"name": "string.filepath.ptd"
 				},
 				{
-					"match": "(?<=files:\\s)([a-zA-Z0-9_]+\\.ts)",
+					"match": "(?<=files:\\s)([a-zA-Z0-9_]+\\.[a-zA-Z0-9]+)",
 					"name": "string.filepath.ptd"
 				},
 				{
-					"match": "(?<=files:\\s)([a-zA-Z0-9_]+\\.ts)(,\\s[a-zA-Z0-9_]+\\.ts)*",
+					"match": "(?<=files:\\s)([a-zA-Z0-9_]+\\.[a-zA-Z0-9]+)(,\\s[a-zA-Z0-9_]+\\.[a-zA-Z0-9]+)*",
 					"name": "string.filepath.ptd"
 				}
 			]
@@ -121,7 +117,7 @@
 		"methodCalls": {
 			"patterns": [
 				{
-					"match": "(?:(?:->\\s*)|\\s+)([a-zA-Z][a-zA-Z0-9]*)\\(([^\\)]*)\\)\\s*(\\[class\\s+[A-Z][a-zA-Z0-9]*,\\s*[A-Z][a-zA-Z0-9]*\\.ts\\])",
+					"match": "(?:(?:->\\s*)|\\s+)([a-zA-Z][a-zA-Z0-9]*)\\(([^\\)]*)\\)\\s*(\\[class\\s+[A-Z][a-zA-Z0-9]*,\\s*[A-Z][a-zA-Z0-9]*\\.[a-zA-Z0-9]+\\])",
 					"captures": {
 						"1": {
 							"name": "entity.name.function.ptd"
@@ -141,7 +137,7 @@
 			]
 		},
 		"classReference": {
-			"match": "\\[class\\s+([A-Z][a-zA-Z0-9]*),\\s*([A-Z][a-zA-Z0-9]*\\.ts)\\]",
+			"match": "\\[class\\s+([A-Z][a-zA-Z0-9]*),\\s*([A-Z][a-zA-Z0-9]*\\.[a-zA-Z0-9]+)\\]",
 			"captures": {
 				"1": {
 					"name": "entity.name.type.class.ptd"
@@ -160,7 +156,7 @@
 					"patterns": [
 						{
 							"name": "text.plain.ptd",
-							"match": "(?<!\\b[A-Z])[a-zA-Z0-9\\s,]+(?!(\\b[A-Z]|\\.ts))"
+							"match": ".*"
 						}
 					]
 				},
@@ -171,7 +167,7 @@
 					"patterns": [
 						{
 							"name": "text.plain.ptd",
-							"match": "(?<!\\b[A-Z])[a-zA-Z0-9\\s,]+(?!(\\b[A-Z]|\\.ts))"
+							"match": ".*"
 						}
 					]
 				}
@@ -183,7 +179,7 @@
 		},
 		"labels": {
 			"name": "entity.name.label.ptd",
-			"match": "\\b(name|version|description|extends|implements|inherits|contains|creates|charges|diagnoses|uses)\\b"
+			"match": "\\b(name|version|description|files):\\s\\b"
 		},
 		"relationships": {
 			"patterns": [
