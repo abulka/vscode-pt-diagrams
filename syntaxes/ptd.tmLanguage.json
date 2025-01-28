@@ -81,6 +81,10 @@
 					"name": "string.filepath.ptd"
 				},
 				{
+					"match": "(?<=files:\\s)([a-zA-Z0-9_]+\\.ts)",
+					"name": "string.filepath.ptd"
+				},
+				{
 					"match": "(?<=files:\\s)([a-zA-Z0-9_]+\\.ts)(,\\s[a-zA-Z0-9_]+\\.ts)*",
 					"name": "string.filepath.ptd"
 				}
@@ -156,7 +160,7 @@
 					"patterns": [
 						{
 							"name": "text.plain.ptd",
-							"match": ".+"
+							"match": "(?<!\\b[A-Z])[a-zA-Z0-9\\s,]+(?!(\\b[A-Z]|\\.ts))"
 						}
 					]
 				},
@@ -167,7 +171,7 @@
 					"patterns": [
 						{
 							"name": "text.plain.ptd",
-							"match": ".+"
+							"match": "(?<!\\b[A-Z])[a-zA-Z0-9\\s,]+(?!(\\b[A-Z]|\\.ts))"
 						}
 					]
 				}
