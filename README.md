@@ -2,6 +2,20 @@
 
 This is the README for your extension "vscode-pt-diagrams". After writing up a brief description, we recommend including the following sections.
 
+# ANDY NOTES
+
+```
+editor.bracketPairColorization.enabled
+```
+is causing yellow bracket highlighting despite my grammar. In other words, its not the fault of the grammar, but the fault of the vscode setting.
+
+```json
+"[ptd]": {
+    "editor.bracketPairColorization.enabled": false
+}
+```
+
+
 ## Features
 
 Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.

@@ -19,8 +19,8 @@
     "grammars": [{
       "language": "ptd",
       "scopeName": "text.ptd",
-      "path": "./syntaxes/ptd.tmLanguage.json",
-      "pathX": "./syntaxes/ptd2.tmLanguage.json"
+      "pathX": "./syntaxes/ptd.tmLanguage.json",
+      "path": "./syntaxes/ptd2.tmLanguage.json"
     }]
   }
 }

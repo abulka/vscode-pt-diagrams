@@ -1,41 +1,31 @@
 {
-	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-	"name": "Basic Brackets and Expressions",
-	"patterns": [
-		{
-			"include": "#description"
-		},
-		{
-			"include": "#plain_text"
-		}
-	],
-	"repository": {
-		"plain_text": {
-			"patterns": [
-				{
-					"name": "text.plain",
-					"match": "[^\\[\\]\\(\\)\\{\\}]+"
-				}
-			]
-		},
-		"description": {
-			"patterns": [
-				{
-					"name": "keyword.description",
-					"match": "\\bdescription:\\s"
-				},
-				{
-					"name": "text.plain",
-					"begin": "(?<=description:\\s)",
-					"end": "$",
-					"patterns": [
-						{
-							"include": "#plain_text"
-						}
-					]
-				}
-			]
-		}
-	},
-	"scopeName": "text.ptd"
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "Basic Brackets and Expressions",
+    "patterns": [
+        {
+            "include": "#expressions"
+        }
+    ],
+    "repository": {
+        "expressions": {
+            "patterns": [
+                {
+                    "name": "keyword.expression",
+                    "match": "\\b(description|name|version|files):\\s"
+                },
+                {
+                    "name": "text.ptd.plain",
+                    "begin": "(?<=\\b(description|name|version|files):\\s)",
+                    "end": "$",
+                    "patterns": [
+                        {
+                            "name": "text.ptd.plain",
+                            "match": ".+"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "scopeName": "text.ptd"
 }
