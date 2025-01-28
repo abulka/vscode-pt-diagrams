@@ -7,14 +7,46 @@
 		},
 		{
 			"include": "#strings"
+		},
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#labels"
+		},
+		{
+			"include": "#relationships"
+		},
+		{
+			"include": "#imports"
+		},
+		{
+			"include": "#classes"
+		},
+		{
+			"include": "#functions"
+		},
+		{
+			"include": "#variables"
+		},
+		{
+			"include": "#scenarios"
+		},
+		{
+			"include": "#numbers"
+		},
+		{
+			"include": "#operators"
 		}
 	],
 	"repository": {
 		"keywords": {
-			"patterns": [{
-				"name": "keyword.control.ptd",
-				"match": "\\b(if|while|for|return)\\b"
-			}]
+			"patterns": [
+				{
+					"name": "keyword.control.ptd",
+					"match": "\\b(Diagram|Scope|Files|Variables|Functions|Classes|Class Relationships|Imports|Use Cases|Scenario|Attributes|Methods|Interfaces|extends|implements|inherits|contains|creates|charges|diagnoses|uses|initializes|reads|fetches|peels|prepares|chops|mixes|blends|serves|refuels|starts|stops|checks|logs|runs|parallel|try|catch|finally|loop|on|recurse)\\b"
+				}
+			]
 		},
 		"strings": {
 			"name": "string.quoted.double.ptd",
@@ -26,6 +58,46 @@
 					"match": "\\\\."
 				}
 			]
+		},
+		"comments": {
+			"name": "comment.line.ptd",
+			"match": "#.*$"
+		},
+		"labels": {
+			"name": "entity.name.label.ptd",
+			"match": "\\b(name|version|description|file|class|interface|extends|implements|inherits|contains|creates|charges|diagnoses|uses|initializes|reads|fetches|peels|prepares|chops|mixes|blends|serves|refuels|starts|stops|checks|logs|runs|parallel|try|catch|finally|loop|on|recurse)\\b"
+		},
+		"relationships": {
+			"name": "meta.relationship.ptd",
+			"match": "-->"
+		},
+		"imports": {
+			"name": "meta.import.ptd",
+			"match": "\\b(Imports|-->)\\b"
+		},
+		"classes": {
+			"name": "entity.name.class.ptd",
+			"match": "\\b([A-Z][a-zA-Z0-9]*)\\b"
+		},
+		"functions": {
+			"name": "entity.name.function.ptd",
+			"match": "\\b([a-z][a-zA-Z0-9]*)\\s*\\("
+		},
+		"variables": {
+			"name": "variable.other.ptd",
+			"match": "\\b([a-z][a-zA-Z0-9]*)\\b"
+		},
+		"scenarios": {
+			"name": "meta.scenario.ptd",
+			"match": "\\b(Scenario|start|stop|charge|check|log|run|parallel|try|catch|finally|loop|on|recurse)\\b"
+		},
+		"numbers": {
+			"name": "constant.numeric.ptd",
+			"match": "\\b\\d+\\b"
+		},
+		"operators": {
+			"name": "keyword.operator.ptd",
+			"match": "->|<|>|\\[|\\]|\\{|\\}|\\(|\\)|@|\\."
 		}
 	},
 	"scopeName": "text.ptd"
