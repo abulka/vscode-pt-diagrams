@@ -9,6 +9,9 @@
 			"include": "#subSections"
 		},
 		{
+			"include": "#arrows"
+		},
+		{
 			"include": "#keywords"
 		},
 		{
@@ -240,7 +243,11 @@
 		},
 		"operators": {
 			"name": "keyword.operator.ptd",
-			"match": "->|<|>|\\[|\\]|\\{|\\}|\\(|\\)|@|\\."
+			"match": "<|>|\\[|\\]|\\{|\\}|\\(|\\)|@|\\."
+		},
+		"arrows": {
+			"name": "keyword.arrows.ptd",
+			"match": "->|^\\s+<\\s"
 		}
 	},
 	"scopeName": "text.ptd"

@@ -50,7 +50,7 @@
             "name": "Subsection",
             "scope": "keyword.subSection.ptd",
             "settings": {
-                "foreground": "#73e25c"  // Green color for subsections
+                "foreground": "#5cc0e2"  // Green color for subsections
             }
         },
         {
@@ -79,6 +79,20 @@
             "scope": "keyword.file.ptd",
             "settings": {
                 "foreground": "#FF6347"  // Tomato color for file keywords
+            }
+        },
+        {
+            "name": "Arrows",
+            "scope": "keyword.arrows.ptd",
+            "settings": {
+                "foreground": "#30f022"  // Deep Sky Blue color for arrows
+            }
+        },
+        {
+            "name": "Relationship",
+            "scope": "keyword.operator.relationship.ptd",
+            "settings": {
+                "foreground": "#9a9a9a"  // Deep Sky Blue color for arrows
             }
         }
 	]
