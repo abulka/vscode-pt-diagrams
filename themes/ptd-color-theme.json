@@ -73,6 +73,13 @@
             "settings": {
                 "foreground": "#FFD700"  // Gold color for function names
             }
+        },
+        {
+            "name": "File Keyword",
+            "scope": "keyword.file.ptd",
+            "settings": {
+                "foreground": "#FF6347"  // Tomato color for file keywords
+            }
         }
 	]
 }

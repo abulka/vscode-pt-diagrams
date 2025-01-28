@@ -69,7 +69,14 @@
 			"patterns": [
 				{
 					"match": "(^\\s+file:\\s)([a-zA-Z0-9_]+\\.[a-zA-Z0-9]+)",
-					"name": "string.filepath.ptd"
+					"captures": {
+						"1": {
+							"name": "keyword.file.ptd"
+						},
+						"2": {
+							"name": "string.filepath.ptd"
+						}
+					}					
 				}
 			]
 		},
