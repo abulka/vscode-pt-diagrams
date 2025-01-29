@@ -9,6 +9,19 @@
   "categories": [
     "Programming Languages"
   ],
+	"keywords": [
+		"diagrams",
+		"plain test",
+		"code mapping",
+		"uml"
+	],
+	"publisher": "wware",
+	"icon": "images/icon.png",
+	"author": {
+		"name": "Andy Bulka",
+		"url": "https://github.com/abulka",
+		"email": "abulka@gmail.com"
+	},
   "contributes": {
     "languages": [{
       "id": "ptd",
