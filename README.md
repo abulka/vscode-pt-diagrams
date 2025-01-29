@@ -11,6 +11,10 @@ Syntax highlighting for `.ptd` files.
 PT Diagrams is a simple language for creating diagrams in a text editor. It is inspired by PlantUML and Graphviz, but is much simpler and more focused on the needs of software developers.
 
 ![Screenshot](doco/screenshot1.png)
+*beginning of a PT Diagram file*
+
+![Screenshot](doco/screenshot2.png)
+*a pseudo code, sequence diagram example of a use case scenario*
 
 ## Requirements
 
