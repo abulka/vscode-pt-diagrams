@@ -2,7 +2,7 @@
   "name": "plain-text-diagrams",
   "displayName": "plain-text-diagrams",
   "description": "Syntax Highlighting for .ptd (Plain Text Diagram) files",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -20,14 +20,7 @@
       "language": "ptd",
       "scopeName": "text.ptd",
       "path": "./syntaxes/ptd.tmLanguage.json"
-    }],
-    "themes": [
-      {
-        "label": "PTD Color Theme",
-        "uiTheme": "vs-dark",
-        "path": "./themes/ptd-color-theme.json"
-      }
-    ]
+    }]
   },
   "repository": {
     "type": "git",

@@ -55,7 +55,7 @@
 		"sections": {
 			"patterns": [
 				{
-					"name": "keyword.section.ptd",
+					"name": "keyword.section.ptd markup.underline",
 					"match": "^(Diagram|Files|Classes|Class Relationships|Imports|Use Cases):"
 				}
 			]
@@ -63,7 +63,7 @@
 		"subSections": {
 			"patterns": [
 				{
-					"name": "keyword.subSection.ptd",
+					"name": "keyword.subSection.ptd punctuation.definition.quote.begin.markdown",
 					"match": "^\\s+(Variables|Functions|Classes|Scenario|Attributes|Methods|Interfaces):"
 				}
 			]
@@ -74,7 +74,7 @@
 					"match": "(^\\s+file:\\s)([a-zA-Z0-9_]+\\.[a-zA-Z0-9]+)",
 					"captures": {
 						"1": {
-							"name": "keyword.file.ptd"
+							"name": "keyword.file.ptd markup.bold"
 						},
 						"2": {
 							"name": "string.filepath.ptd"
@@ -210,7 +210,7 @@
 			"match": "#.*$"
 		},
 		"labels": {
-			"name": "entity.name.label.ptd",
+			"name": "entity.name.label.ptd markup.bold",
 			"match": "\\b(name|version|description|files):\\s\\b"
 		},
 		"relationships": {
