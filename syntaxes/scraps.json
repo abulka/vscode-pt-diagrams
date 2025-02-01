@@ -1,0 +1,9 @@
+{
+    "include": "#pseudo-code-comment"
+},
+
+
+"pseudo-code-comment": {
+    "name": "comment.line.description.ptd",
+    "match": "^\\s+(?<=\\s{8})(?!->|<\\s|\\[)([a-z].*$)"
+  },

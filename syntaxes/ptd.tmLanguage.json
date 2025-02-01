@@ -21,7 +21,7 @@
 			"include": "#imports"
 		},
 		{
-			"include": "#descriptions"
+			"include": "#description"
 		},
 		{
 			"include": "#comments"
@@ -79,7 +79,7 @@
 						"2": {
 							"name": "string.filepath.ptd"
 						}
-					}					
+					}
 				}
 			]
 		},
@@ -179,32 +179,18 @@
 				}
 			}
 		},
-		"descriptions": {
+		"description": {
+			"name": "string.unquoted.description.ptd",
+			"begin": "(?<=description:\\s)",
+			"end": "(?=^\\s*[a-zA-Z]+:)|(?=^\\s*$)",
 			"patterns": [
 				{
-					"name": "string.unquoted.description.ptd",
-					"begin": "(?<=description:\\s)",
-					"end": "$",
-					"patterns": [
-						{
-							"name": "text.plain.ptd",
-							"match": ".*"
-						}
-					]
-				},
-				{
-					"name": "string.unquoted.scenario.ptd",
-					"begin": "(?<=Scenario:\\s)",
-					"end": "$",
-					"patterns": [
-						{
-							"name": "text.plain.ptd",
-							"match": ".*"
-						}
-					]
+					"name": "text.plain.ptd",
+					"match": ".+"
 				}
 			]
 		},
+
 		"comments": {
 			"name": "comment.line.number-sign.ptd",
 			"match": "#.*$"
@@ -249,11 +235,11 @@
 			"name": "keyword.arrows.ptd",
 			"match": "((?:◆|◇)?[-⋯.]{2,})([a-zA-Z][a-zA-Z\\s]+(?:by|on)?[a-zA-Z])([-⋯.]{2,}(?:>|▷))",
 			"captures": {
-			  "2": {
-				"name": "keyword.control.relationship.ptd"
-			  }
+				"2": {
+					"name": "keyword.control.relationship.ptd"
+				}
 			}
-		  }
+		}
 	},
 	"scopeName": "text.ptd"
 }
