@@ -64,7 +64,7 @@
 			"patterns": [
 				{
 					"name": "keyword.subSection.ptd punctuation.definition.quote.begin.markdown",
-					"match": "^\\s+(Variables|Functions|Classes|Scenario|Attributes|Methods|Interfaces):"
+					"match": "^\\s+(Variables|Functions|Classes|Scenario|Sequence|Attributes|Methods|Interfaces):"
 				}
 			]
 		},
@@ -87,7 +87,7 @@
 			"patterns": [
 				{
 					"name": "keyword.control.ptd",
-					"match": "\\b(interface|class|function|inherits|implements|extends|override|contains|creates|uses)\\b"
+					"match": "\\b(interface|class|function|inherits|implements|extends|override|contains|creates|uses|depends|owns)\\b"
 				}
 			]
 		},
@@ -211,7 +211,7 @@
 		},
 		"labels": {
 			"name": "entity.name.label.ptd markup.bold",
-			"match": "\\b(name|version|description|files):\\s\\b"
+			"match": "\\b(name|version|version-ptd|description|files):\\s\\b"
 		},
 		"relationships": {
 			"patterns": [
@@ -247,8 +247,13 @@
 		},
 		"arrows": {
 			"name": "keyword.arrows.ptd",
-			"match": "->|^\\s+<\\s"
-		}
+			"match": "((?:◆|◇)?[-⋯.]{2,})([a-zA-Z][a-zA-Z\\s]+(?:by|on)?[a-zA-Z])([-⋯.]{2,}(?:>|▷))",
+			"captures": {
+			  "2": {
+				"name": "keyword.control.relationship.ptd"
+			  }
+			}
+		  }
 	},
 	"scopeName": "text.ptd"
 }
