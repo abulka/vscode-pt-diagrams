@@ -109,15 +109,23 @@ function formatPtd(text, outputChannel) {
 
         if (trimmedLine.match(/^(class:|interface:)/)) {
             state.indentLevel = 1;
+            state.inClassDeclaration = true;
             return getIndentedLine(line, state.indentLevel);
         }
 
         if (state.currentSection === 'Classes') {
             if (trimmedLine.match(/^(Attributes|Methods):/)) {
                 state.indentLevel = 2;
+                state.inClassDeclaration = false;
                 return getIndentedLine(line, state.indentLevel);
             }
             if (!trimmedLine.endsWith(':') && trimmedLine !== '') {
+
+                // Try to get arrows to line up with each other, 15 is just a guess, it will do.
+                if (state.inClassDeclaration && trimmedLine.match(/.*(▷|>)/)) {
+                    return getIndentedLine(line, state.indentLevel * 15);
+                }
+
                 state.indentLevel = 3;
                 return getIndentedLine(line, state.indentLevel);
             }
