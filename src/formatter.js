@@ -39,7 +39,7 @@ function formatPtd(text, outputChannel) {
         if (trimmedLine.startsWith('Sequence:')) {
             state.indentLevel = state.baseSequenceIndent;
             let result = getIndentedLine(line, state.indentLevel);
-            state.indentLevel += 2; // for subsequent lines
+            state.indentLevel += 1; // for subsequent lines
             return result;
         }
 
