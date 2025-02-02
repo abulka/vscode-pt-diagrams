@@ -13,7 +13,7 @@ function activate(context) {
         context.subscriptions.push(
             vscode.languages.registerDocumentFormattingEditProvider(
                 { scheme: 'file', language: 'ptd' },
-                new PtdDocumentFormattingEditProvider()
+                new PtdDocumentFormattingEditProvider(outputChannel)
             )
         );        
     }
