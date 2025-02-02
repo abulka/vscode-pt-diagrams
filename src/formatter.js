@@ -11,7 +11,8 @@ function formatPtd(text, outputChannel) {
         indentLevel: 0,
         currentSection: '',
         baseSequenceIndent: 1,
-        inDescription: false
+        inDescription: false,
+        inClassDeclaration: false
     };
 
     function getIndentedLine(line, level) {
@@ -35,7 +36,7 @@ function formatPtd(text, outputChannel) {
         if (trimmedLine.startsWith('Sequence:')) {
             state.indentLevel = state.baseSequenceIndent;
             let result = getIndentedLine(line, state.indentLevel);
-            state.indentLevel++; // for subsequent lines
+            state.indentLevel += 2; // for subsequent lines
             return result;
         }
 
@@ -43,24 +44,21 @@ function formatPtd(text, outputChannel) {
         if (trimmedLine.match(/^[a-zA-Z]+\([^)]*\)\s*\[.*\]$/) && state.indentLevel === state.baseSequenceIndent + 1) {
             state.indentLevel = state.baseSequenceIndent + 1;
             let result = getIndentedLine(line, state.indentLevel);
-            state.indentLevel++; // for subsequent lines
-            state.indentLevel++; // for subsequent lines
+            state.indentLevel += 2; // for subsequent lines
             return result
         }
 
         // function call (with arrow)
         if (trimmedLine.match(/.*->\s*/)) {
             let result = getIndentedLine(line, state.indentLevel);
-            state.indentLevel++; // for subsequent lines
-            state.indentLevel++; // for subsequent lines
+            state.indentLevel += 2; // for subsequent lines
             return result;
         }
 
         // Handle return statements
         if (trimmedLine.startsWith('<')) {
             let result = getIndentedLine(line, state.indentLevel);
-            state.indentLevel--; // for subsequent lines
-            state.indentLevel--; // for subsequent lines
+            state.indentLevel -= 2; // for subsequent lines
             return result
         }
 
@@ -70,7 +68,7 @@ function formatPtd(text, outputChannel) {
 
     function processImportsSection(line) {
         const trimmedLine = line.trim();
-        
+
         if (state.currentSection !== 'Imports') {
             return false;
         }
@@ -87,12 +85,12 @@ function formatPtd(text, outputChannel) {
 
     function processFileSection(line) {
         const trimmedLine = line.trim();
-        
+
         if (trimmedLine.startsWith('file:')) {
             state.indentLevel = 1;
             return getIndentedLine(line, state.indentLevel);
         }
-        
+
         if (state.currentSection === 'Files') {
             if (trimmedLine.match(/^(Variables|Functions|Classes|Interfaces):/)) {
                 state.indentLevel = 2;
@@ -108,12 +106,12 @@ function formatPtd(text, outputChannel) {
 
     function processClassesSection(line) {
         const trimmedLine = line.trim();
-        
+
         if (trimmedLine.match(/^(class:|interface:)/)) {
             state.indentLevel = 1;
             return getIndentedLine(line, state.indentLevel);
         }
-        
+
         if (state.currentSection === 'Classes') {
             if (trimmedLine.match(/^(Attributes|Methods):/)) {
                 state.indentLevel = 2;
@@ -129,7 +127,7 @@ function formatPtd(text, outputChannel) {
 
     function processDiagramSection(line) {
         const trimmedLine = line.trim();
-        
+
         if (state.currentSection === 'Diagram') {
             if (trimmedLine.startsWith('description:')) {
                 let result = getIndentedLine(line, state.indentLevel);
@@ -167,9 +165,9 @@ function formatPtd(text, outputChannel) {
         } else if (state.currentSection === 'Imports') {
             formattedLine = processImportsSection(line);
         } else {
-            formattedLine = processFileSection(line) || 
-                           processClassesSection(line) || 
-                           processDiagramSection(line);
+            formattedLine = processFileSection(line) ||
+                processClassesSection(line) ||
+                processDiagramSection(line);
         }
 
         if (formattedLine) {
