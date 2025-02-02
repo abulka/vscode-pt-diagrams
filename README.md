@@ -54,6 +54,8 @@ Solution is to disable bracket pair colorization in your settings.json:
 
 ## Release Notes
 
+See [CHANGELOG.md](CHANGELOG.md)
+
 Initial release of PT Diagrams syntax highlighting.
 
 ### 0.0.2

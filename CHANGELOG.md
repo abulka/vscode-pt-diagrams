@@ -2,8 +2,6 @@
 
 All notable changes to the "vscode-pt-diagrams" extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-
 ## [1.1.1]
 
 - Support for version-ptd: 1.1 schema
