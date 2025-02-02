@@ -22,6 +22,7 @@
 		"url": "https://github.com/abulka",
 		"email": "abulka@gmail.com"
 	},
+  "main": "./src/extension.js",
   "contributes": {
     "languages": [{
       "id": "ptd",
