@@ -11,6 +11,7 @@ function formatPtd(text, outputChannel) {
         indentLevel: 0,
         currentSection: '',
         baseSequenceIndent: 1,
+        inDescription: false
     };
 
     function getIndentedLine(line, level) {
@@ -21,6 +22,7 @@ function formatPtd(text, outputChannel) {
         if (line.match(/^(Diagram|Files|Classes|Imports|Use Cases|Sequence):$/)) {
             state.currentSection = line.split(':')[0];
             state.indentLevel = 0;
+            state.inDescription = false;
             return true;
         }
         return false;
@@ -128,7 +130,18 @@ function formatPtd(text, outputChannel) {
     function processDiagramSection(line) {
         const trimmedLine = line.trim();
         
-        if (state.currentSection === 'Diagram' && trimmedLine !== '') {
+        if (state.currentSection === 'Diagram') {
+            if (trimmedLine.startsWith('description:')) {
+                let result = getIndentedLine(line, state.indentLevel);
+                state.inDescription = true;
+                return result;
+            }
+            if (state.inDescription && !trimmedLine.match(/^(files|version|version-ptd|name):/)) {
+                return ' '.repeat(15) + line.trim();
+            }
+            if (trimmedLine.match(/^(files|version|version-ptd|name):/)) {
+                state.inDescription = false;
+            }
             state.indentLevel = 1;
             return getIndentedLine(line, state.indentLevel);
         }
