@@ -2,7 +2,7 @@
 
 All notable changes to the "vscode-pt-diagrams" extension will be documented in this file.
 
-## [1.1.1]
+## [1.1.2]
 
 - Support for version-ptd: 1.1 schema
     - Renames `Scenario:` to `Sequence:`
