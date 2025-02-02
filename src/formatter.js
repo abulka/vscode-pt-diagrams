@@ -25,6 +25,8 @@ function formatPtd(text, outputChannel) {
             state.currentSection = line.split(':')[0];
             state.indentLevel = 0;
             state.inDescription = false;
+            state.inClassDeclaration = false;
+            state.lastNumLeadingSpaces = 0;
             return true;
         }
         return false;
@@ -209,7 +211,7 @@ class PtdDocumentFormattingEditProvider {
         const range = new vscode.Range(start, end);
         const text = document.getText(range);
         const formattedText = formatPtd(text, this.outputChannel);
-        this.outputChannel.appendLine('Formatting document...');
+        this.outputChannel.appendLine('Formatting Plain Text Diagram document...');
         return [vscode.TextEdit.replace(range, formattedText)];
     }
 }
