@@ -10,7 +10,6 @@ function formatPtd(text, outputChannel) {
     let state = {
         indentLevel: 0,
         currentSection: '',
-        arrowStack: [],
         baseSequenceIndent: 1,
     };
 
@@ -49,7 +48,6 @@ function formatPtd(text, outputChannel) {
 
         // function call (with arrow)
         if (trimmedLine.match(/.*->\s*/)) {
-            outputChannel.appendLine(`Arrow found: ${trimmedLine}`);
             let result = getIndentedLine(line, state.indentLevel);
             state.indentLevel++; // for subsequent lines
             state.indentLevel++; // for subsequent lines
