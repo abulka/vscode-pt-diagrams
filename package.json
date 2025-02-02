@@ -2,7 +2,7 @@
   "name": "plain-text-diagrams",
   "displayName": "plain-text-diagrams",
   "description": "Syntax Highlighting for .ptd (Plain Text Diagram) files",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "engines": {
     "vscode": "^1.96.0"
   },
