@@ -1,7 +1,7 @@
 {
   "name": "plain-text-diagrams",
-  "displayName": "plain-text-diagrams",
-  "description": "Syntax Highlighting for .ptd (Plain Text Diagram) files",
+  "displayName": "Plain Text 'Diagrams'",
+  "description": "Syntax Highlighting and formatting for .ptd (Plain Text Diagram) files",
   "version": "1.1.1",
   "engines": {
     "vscode": "^1.96.0"
@@ -19,10 +19,13 @@
 	"icon": "images/icon.png",
 	"author": {
 		"name": "Andy Bulka",
-		"url": "https://github.com/abulka",
+		"url": "https://abulka.github.io/blog/2025/01/29/plain-text-diagrams/",
 		"email": "abulka@gmail.com"
 	},
   "main": "./src/extension.js",
+  "activationEvents": [
+    "onCommand:extension.formatPtd"
+  ],
   "contributes": {
     "languages": [{
       "id": "ptd",

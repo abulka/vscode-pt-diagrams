@@ -78,44 +78,44 @@ Classes:
 Use Cases:
   Sequence: Preparation
     🧍‍♂️ -> startRecipe() [Recipe.ts]
-         initializes recipe
-         -> read() [Recipe.ts]
-             reads ingredients
-             -> getType() [class Fruit, Fruit.ts]
-                 fetches fruit type
-                 < string
-             -> peel() [class Fruit, Fruit.ts]
-                 peels the fruit
-                 < void
-             < Fruit[]
-         -> prepare(fruit: Fruit) [Recipe.ts]
-             prepares fruit for chopping
-             -> peel() [class Fruit, Fruit.ts]
-                 peels the fruit
-                 < void
-             < void
-         -> chop(fruit: Fruit) [Recipe.ts]
-             chops the fruit
-             < void
-         -> makeSmoothie(fruit: Fruit) [Recipe.ts]
-             mixes fruit into smoothie
-             -> blend(fruit: Fruit) [class Smoothie, Smoothie.ts]
-                 blends fruit into smoothie
-                 < void
-             -> serve() [class Smoothie, Smoothie.ts]
-                 serves the smoothie
-                 < void
-         < Smoothie
+        initializes recipe
+        -> read() [Recipe.ts]
+            reads ingredients
+            -> getType() [class Fruit, Fruit.ts]
+                fetches fruit type
+                < string
+            -> peel() [class Fruit, Fruit.ts]
+                peels the fruit
+                < void
+            < Fruit[]
+        -> prepare(fruit: Fruit) [Recipe.ts]
+            prepares fruit for chopping
+            -> peel() [class Fruit, Fruit.ts]
+                peels the fruit
+                < void
+            < void
+        -> chop(fruit: Fruit) [Recipe.ts]
+            chops the fruit
+            < void
+        -> makeSmoothie(fruit: Fruit) [Recipe.ts]
+            mixes fruit into smoothie
+            -> blend(fruit: Fruit) [class Smoothie, Smoothie.ts]
+                blends fruit into smoothie
+                < void
+            -> serve() [class Smoothie, Smoothie.ts]
+                serves the smoothie
+                < void
+            < Smoothie
 
   Sequence: Serving
     🖱️ -> startRecipe() [Recipe.ts]
-         initializes recipe
-         -> makeSmoothie(fruit: Fruit) [Recipe.ts]
-             mixes fruit into smoothie
-             -> blend(fruit: Fruit) [class Smoothie, Smoothie.ts]
-                 blends fruit into smoothie
-                 < void
-             -> serve() [class Smoothie, Smoothie.ts]
-                 serves the smoothie
-                 < void
-         < Smoothie
+        initializes recipe
+        -> makeSmoothie(fruit: Fruit) [Recipe.ts]
+            mixes fruit into smoothie
+            -> blend(fruit: Fruit) [class Smoothie, Smoothie.ts]
+                blends fruit into smoothie
+                < void
+            -> serve() [class Smoothie, Smoothie.ts]
+                serves the smoothie
+                < void
+            < Smoothie
