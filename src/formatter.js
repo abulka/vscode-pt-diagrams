@@ -22,7 +22,6 @@ function formatPtd(text, outputChannel) {
         if (line.match(/^(Diagram|Files|Classes|Imports|Use Cases|Sequence):$/)) {
             state.currentSection = line.split(':')[0];
             state.indentLevel = 0;
-            state.arrowStack = [];
             return true;
         }
         return false;
@@ -34,7 +33,6 @@ function formatPtd(text, outputChannel) {
         // Handle sequence headers
         if (trimmedLine.startsWith('Sequence:')) {
             state.indentLevel = state.baseSequenceIndent;
-            state.arrowStack = [];
             let result = getIndentedLine(line, state.indentLevel);
             state.indentLevel++; // for subsequent lines
             return result;
@@ -45,6 +43,7 @@ function formatPtd(text, outputChannel) {
             state.indentLevel = state.baseSequenceIndent + 1;
             let result = getIndentedLine(line, state.indentLevel);
             state.indentLevel++; // for subsequent lines
+            state.indentLevel++; // for subsequent lines
             return result
         }
 
@@ -52,7 +51,7 @@ function formatPtd(text, outputChannel) {
         if (trimmedLine.match(/.*->\s*/)) {
             outputChannel.appendLine(`Arrow found: ${trimmedLine}`);
             let result = getIndentedLine(line, state.indentLevel);
-            state.arrowStack.push(state.indentLevel);
+            state.indentLevel++; // for subsequent lines
             state.indentLevel++; // for subsequent lines
             return result;
         }
@@ -60,9 +59,8 @@ function formatPtd(text, outputChannel) {
         // Handle return statements
         if (trimmedLine.startsWith('<')) {
             let result = getIndentedLine(line, state.indentLevel);
-            if (state.arrowStack.length > 0) {
-                state.indentLevel = state.arrowStack.pop();
-            }
+            state.indentLevel--; // for subsequent lines
+            state.indentLevel--; // for subsequent lines
             return result
         }
 
