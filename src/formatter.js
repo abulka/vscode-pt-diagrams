@@ -67,20 +67,33 @@ function formatPtd(text, outputChannel) {
     }
 
     function processImportsSection(line) {
-        const trimmedLine = line.trim();
-
+        // Check if we're in the 'Imports' section
         if (state.currentSection !== 'Imports') {
             return false;
         }
-
-        if (!trimmedLine.startsWith('-->')) {
-            state.indentLevel = 1;
-            return getIndentedLine(line, state.indentLevel);
+    
+        // Calculate the current indentation level of the line
+        const indentLevel = line.match(/^\s*/)[0].length;
+    
+        // Check if the line contains an import arrow (-->)
+        if (line.includes('-->')) {
+            // Count the number of arrows to determine the depth
+            const arrowDepth = (line.match(/-->/g) || []).length;
+    
+            // Calculate the new indentation level
+            // Base indentation is 2 spaces, plus 2 spaces for each additional arrow
+            const newIndentLevel = 2 + (arrowDepth - 1) * 2;
+    
+            // Ensure the new indentation level respects the existing indentation
+            const finalIndentLevel = Math.max(indentLevel, newIndentLevel);
+    
+            // Return the line with the correct indentation
+            return getIndentedLine(line.trim(), finalIndentLevel);
         }
-
-        const arrowDepth = (trimmedLine.match(/-->/g) || []).length;
-        state.indentLevel = 2 + (arrowDepth - 1);
-        return getIndentedLine(line, state.indentLevel);
+    
+        // If the line doesn't contain an arrow, treat it as a top-level import
+        // and indent it with 2 spaces
+        return getIndentedLine(line.trim(), 2);
     }
 
     function processFileSection(line) {
