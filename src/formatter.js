@@ -12,7 +12,8 @@ function formatPtd(text, outputChannel) {
         currentSection: '',
         baseSequenceIndent: 1,
         inDescription: false,
-        inClassDeclaration: false
+        inClassDeclaration: false,
+        lastNumLeadingSpaces: 0
     };
 
     function getIndentedLine(line, level) {
@@ -67,33 +68,29 @@ function formatPtd(text, outputChannel) {
     }
 
     function processImportsSection(line) {
-        // Check if we're in the 'Imports' section
+        const trimmedLine = line.trim();
+
         if (state.currentSection !== 'Imports') {
             return false;
         }
-    
-        // Calculate the current indentation level of the line
-        const indentLevel = line.match(/^\s*/)[0].length;
-    
-        // Check if the line contains an import arrow (-->)
-        if (line.includes('-->')) {
-            // Count the number of arrows to determine the depth
-            const arrowDepth = (line.match(/-->/g) || []).length;
-    
-            // Calculate the new indentation level
-            // Base indentation is 2 spaces, plus 2 spaces for each additional arrow
-            const newIndentLevel = 2 + (arrowDepth - 1) * 2;
-    
-            // Ensure the new indentation level respects the existing indentation
-            const finalIndentLevel = Math.max(indentLevel, newIndentLevel);
-    
-            // Return the line with the correct indentation
-            return getIndentedLine(line.trim(), finalIndentLevel);
+        
+        const numLeadingSpaces = line.match(/^\s*/)[0].length;
+
+        if (trimmedLine.startsWith('-->')) {
+            if (numLeadingSpaces == 0 || numLeadingSpaces > state.lastNumLeadingSpaces) {
+                state.indentLevel++;
+            }
+            else if (numLeadingSpaces < state.lastNumLeadingSpaces) {
+                state.indentLevel--;
+            }
+            state.lastNumLeadingSpaces = numLeadingSpaces;
         }
-    
-        // If the line doesn't contain an arrow, treat it as a top-level import
-        // and indent it with 2 spaces
-        return getIndentedLine(line.trim(), 2);
+        else {
+            state.indentLevel = 1;
+            state.lastNumLeadingSpaces = 0;
+        }
+
+        return getIndentedLine(line, state.indentLevel);
     }
 
     function processFileSection(line) {
