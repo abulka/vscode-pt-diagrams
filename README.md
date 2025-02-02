@@ -2,29 +2,34 @@
 
 Syntax highlighting for `.ptd` [Plain Text Diagrams](https://abulka.github.io/blog/2025/01/29/plain-text-diagrams/) files.
 
+See the official [Plain Text Diagrams](https://abulka.github.io/blog/2025/01/29/plain-text-diagrams/) blog post for information on PT Diagrams and the official syntax.
+
+See below for an example of a class diagram and a sequence diagram in PT Diagrams format.
+
+## What are PT Diagrams?
 PT Diagrams is a simple text notation for creating text 'diagrams' - they aren't really diagrams but are nested, indented text files that can be rapidly parsed by the human eye to gain a high level understanding of a software system.
 
 Structural: For example classes and files are listed with their data and behaviour - try to see them as boxes. Some class relationships are indicated with arrows. 
 
 Behavioural: Sequence 'diagrams' are constructed via an indented pseudo code format. Function calls are shown with arrows, return types are shown with `<`, and work well to indicate the flow of a use case scenario.
 
+
+![Screenshot](doco/pt-diagram-screenshot0.png)
+*Plain Text class 'diagram' and sequence 'diagrams'*
+
 ## Installation
 
 - Visit https://marketplace.visualstudio.com/items?itemName=wware.plain-text-diagrams
 
-- Or search for `plain-text-diagrams` inside vscode extensions.
+- Or search for `wware` or `plain-text-diagrams` inside vscode extensions.
 
 Then just open a file with a `.ptd` or `.pt-diagram` extension.
 
 ## Features
 
-Syntax highlighting for `.ptd` files.
+Syntax highlighting and folding for `.ptd` files.
 
-![Screenshot](doco/screenshot1.png)
-*beginning of a PT Diagram file*
-
-![Screenshot](doco/screenshot2.png)
-*a pseudo code, sequence diagram example of a use case scenario*
+Format your `.ptd` files with `OPT+SHIFT+F`.
 
 ## Requirements
 
@@ -55,16 +60,6 @@ Solution is to disable bracket pair colorization in your settings.json:
 ## Release Notes
 
 See [CHANGELOG.md](CHANGELOG.md)
-
-Initial release of PT Diagrams syntax highlighting.
-
-### 0.0.2
-
-Initial release of PT Diagrams syntax highlighting.
-
-### 0.0.1
-
-Alpha release of PT Diagrams syntax highlighting.
 
 ---
 
