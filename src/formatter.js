@@ -12,7 +12,6 @@ function formatPtd(text, outputChannel) {
         currentSection: '',
         arrowStack: [],
         baseSequenceIndent: 1,
-        // conditionalStack: [] // Stack to track conditional blocks
     };
 
     function getIndentedLine(line, level) {
@@ -24,7 +23,6 @@ function formatPtd(text, outputChannel) {
             state.currentSection = line.split(':')[0];
             state.indentLevel = 0;
             state.arrowStack = [];
-            state.conditionalStack = []; // Reset conditional stack
             return true;
         }
         return false;
@@ -37,25 +35,23 @@ function formatPtd(text, outputChannel) {
         if (trimmedLine.startsWith('Sequence:')) {
             state.indentLevel = state.baseSequenceIndent;
             state.arrowStack = [];
-            // state.conditionalStack = []; // Reset conditional stack
             let result = getIndentedLine(line, state.indentLevel);
             state.indentLevel++; // for subsequent lines
             return result;
         }
 
-        // Method declaration after sequence header
-        if (trimmedLine.match(/^[a-zA-Z]+\([^)]*\)\s*\[.*\]$/)) {
-            outputChannel.appendLine(`Method declaration: ${trimmedLine} at indent level ${state.indentLevel}`);
+        // function call (without arrow, only allowed after Sequence: line)
+        if (trimmedLine.match(/^[a-zA-Z]+\([^)]*\)\s*\[.*\]$/) && state.indentLevel === state.baseSequenceIndent + 1) {
             state.indentLevel = state.baseSequenceIndent + 1;
             let result = getIndentedLine(line, state.indentLevel);
             state.indentLevel++; // for subsequent lines
             return result
         }
 
-        // Handle arrow calls
-        if (trimmedLine.startsWith('->')) {
+        // function call (with arrow)
+        if (trimmedLine.match(/.*->\s*/)) {
+            outputChannel.appendLine(`Arrow found: ${trimmedLine}`);
             let result = getIndentedLine(line, state.indentLevel);
-            // state.indentLevel++;
             state.arrowStack.push(state.indentLevel);
             state.indentLevel++; // for subsequent lines
             return result;
@@ -69,31 +65,6 @@ function formatPtd(text, outputChannel) {
             }
             return result
         }
-
-        // // Handle conditional blocks like [if ...] and [else]
-        // if (trimmedLine.match(/^\[(if|else)\b/)) {
-        //     if (trimmedLine.startsWith('[else]')) {
-        //         // Align [else] with its corresponding [if]
-        //         if (state.conditionalStack.length > 0) {
-        //             state.indentLevel = state.conditionalStack[state.conditionalStack.length - 1];
-        //         }
-        //     } else {
-        //         // Push the current indentation level for [if]
-        //         state.conditionalStack.push(state.indentLevel);
-        //     }
-        //     return getIndentedLine(line, state.indentLevel);
-        // }
-
-        // // Handle nested blocks like [parallel], [try], [catch], [finally]
-        // if (trimmedLine.match(/^\[(parallel|try|catch|finally)\]/)) {
-        //     state.indentLevel++;
-        //     return getIndentedLine(line, state.indentLevel - 1);
-        // }
-
-        // Handle description lines (lines after arrows or conditionals)
-        // if ((state.arrowStack.length > 0 || state.conditionalStack.length > 0) && !trimmedLine.match(/^(->|<|\[|\])/)) {
-        //     return getIndentedLine(line, state.indentLevel + 1);
-        // }
 
         // For any other lines in the sequence
         return getIndentedLine(line, state.indentLevel);
