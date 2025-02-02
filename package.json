@@ -34,7 +34,12 @@
       "language": "ptd",
       "scopeName": "text.ptd",
       "path": "./syntaxes/ptd.tmLanguage.json"
-    }]
+    }],
+    "configurationDefaults": {
+      "[ptd]": {
+        "editor.defaultFormatter": "wware.plain-text-diagrams"
+      }
+    }    
   },
   "repository": {
     "type": "git",
