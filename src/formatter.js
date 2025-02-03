@@ -14,7 +14,8 @@ function formatPtd(text, outputChannel) {
         inDescription: false, // for Diagram section
         inClassDeclaration: false, // for Classes section
         lastNumLeadingSpaces: 0, // for Imports section
-        sequenceBlockLevel: 0 // [if] and [try] blocks
+        sequenceBlockLevel: 0, // [if] and [try] blocks
+        blockStartIndent: null // indent level where block started
     };
 
     function getIndentedLine(line, level) {
@@ -29,6 +30,7 @@ function formatPtd(text, outputChannel) {
             state.inClassDeclaration = false;
             state.lastNumLeadingSpaces = 0;
             state.sequenceBlockLevel = 0;
+            state.blockStartIndent = null;
             return true;
         }
         return false;
@@ -36,81 +38,83 @@ function formatPtd(text, outputChannel) {
 
     function processSequenceFlow(line) {
         const trimmedLine = line.trim();
-        // outputChannel.appendLine(JSON.stringify(trimmedLine));
-
+        
         // Handle sequence headers
         if (trimmedLine.startsWith('Sequence:')) {
             state.indentLevel = state.baseSequenceIndent;
             let result = getIndentedLine(line, state.indentLevel);
-            state.indentLevel += 1; // for subsequent lines
+            state.indentLevel += 1;
             return result;
         }
-
-        // function call (without arrow, only allowed after Sequence: line)
+    
+        // Handle function calls (without arrow, only allowed after Sequence: line)
         if (trimmedLine.match(/^[a-zA-Z_$][a-zA-Z0-9_$]+\([^)]*\).*/) && state.indentLevel === state.baseSequenceIndent + 1) {
-            state.indentLevel = state.baseSequenceIndent + 1;
             let result = getIndentedLine(line, state.indentLevel);
-            state.indentLevel += 1; // for subsequent lines
-            return result
+            state.indentLevel += 1;
+            return result;
         }
-
-        // function call (with arrow)
+    
+        // Handle function calls (with arrow)
         if (trimmedLine.match(/.*->\s*/)) {
             let result = getIndentedLine(line, state.indentLevel);
-            state.indentLevel += 1; // for subsequent lines
+            state.indentLevel += 1;
             return result;
         }
-
+    
         // Handle return statements
         if (trimmedLine.startsWith('<')) {
             let result = getIndentedLine(line, state.indentLevel);
-            // if (state.sequenceBlockLevel <= 0) {
-            //     state.indentLevel -= 1; // for subsequent lines
-            // }
-            state.indentLevel -= 1; // for subsequent lines
-            return result
+            // Only dedent if not inside a block or if this is the last statement in a block
+            if (state.sequenceBlockLevel <= 0 || 
+                (state.sequenceBlockLevel > 0 && isLastStatementInBlock(trimmedLine))) {
+                state.indentLevel -= 1;
+            }
+            return result;
         }
-
-        // Handle [if] and [try] blocks
-        if (['[if', '[try', '[for', '[while', '[switch'].some(keyword => trimmedLine.startsWith(keyword))) {
-            state.sequenceBlockLevel++;
+    
+        // Handle block start keywords ([if, [try, [for, etc.)
+        if (['[if', '[try', '[for', '[loop', '[while', '[switch'].some(keyword => trimmedLine.startsWith(keyword))) {
             let result = getIndentedLine(line, state.indentLevel);
-            state.indentLevel += 1; // for subsequent lines
-            return result
+            state.sequenceBlockLevel++;
+            state.blockStartIndent = state.indentLevel; // Store the indent level where block started
+            state.indentLevel += 1;
+            return result;
         }
-
+    
+        // Handle [else, [finally, [except blocks
         if (['[else', '[finally', '[except'].some(keyword => trimmedLine.startsWith(keyword))) {
             if (state.sequenceBlockLevel <= 0) {
-                outputChannel.appendLine(`unexpected ${keyword} found`);
+                outputChannel.appendLine(`unexpected ${trimmedLine.split(' ')[0]} found`);
             }
-            // state.indentLevel -= 1; // for current line
-            let result = getIndentedLine(line, state.indentLevel);
-            state.sequenceBlockLevel++;
-            state.indentLevel += 1; // for subsequent lines
-            return result
+            // Dedent back to the original block level
+            state.indentLevel = state.blockStartIndent + 1;
+            let result = getIndentedLine(line, state.blockStartIndent);
+            return result;
         }
-
+    
+        // Handle block end keywords ([end, [endif, [endtry, etc.)
         if (['[end', '[endif', '[endtry', '[endfor', '[endwhile', '[endswitch'].some(keyword => trimmedLine.startsWith(keyword))) {
             state.sequenceBlockLevel--;
-            // state.indentLevel -= 1; // for current line
+            // Reset to the indent level of the matching block start
+            state.indentLevel = state.blockStartIndent;
             let result = getIndentedLine(line, state.indentLevel);
-            return result
+            if (state.sequenceBlockLevel === 0) {
+                state.blockStartIndent = null;
+            }
+            return result;
         }
-
+    
         // For any other lines in the sequence
         return getIndentedLine(line, state.indentLevel);
     }
-
-    // function processSequenceFlowBlankLine() {
-    //     // A blank line resets state.inSequenceBlock
-    //     if (state.currentSection === 'Sequence' || state.currentSection === 'Use Cases') {
-    //         if (state.sequenceBlockLevel > 0) {
-    //             outputChannel.appendLine(`blank line found - sequenceBlockLevel: ${state.sequenceBlockLevel}`);
-    //             state.sequenceBlockLevel--;
-    //             state.indentLevel -= 1;
-    //         }
-    //     }
-    // }
+    
+    // Helper function to determine if this return statement is the last statement in a block
+    function isLastStatementInBlock(line) {
+        // You would need to implement logic here to look ahead at the next non-empty line
+        // and check if it's an [end], [else], or similar block-ending keyword
+        // This is a simplified version
+        return true; // For demonstration - you'll need to implement the actual logic
+    }
 
     function processImportsSection(line) {
         const trimmedLine = line.trim();
@@ -213,7 +217,6 @@ function formatPtd(text, outputChannel) {
     lines.forEach((line) => {
         if (line.trim() === '') {
             formattedLines.push('');
-            // processSequenceFlowBlankLine();
             return;
         }
 
