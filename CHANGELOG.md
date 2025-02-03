@@ -2,6 +2,13 @@
 
 All notable changes to the "vscode-pt-diagrams" extension will be documented in this file.
 
+## [1.1.3]
+
+- Nested `[if]` and `[else]` blocks are now supported in the `Sequence:` section. 
+- Pop out of nested blocks with `[end]`.
+- New spacing for `Sequence:` section to make it easier to read. Deeply nested blocks are indented further.
+- Fix: allow _ and $ chars in function names in `Sequence:` section.
+
 ## [1.1.2]
 
 - Support for version-ptd: 1.1 schema
