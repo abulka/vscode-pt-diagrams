@@ -34,6 +34,7 @@ function formatPtd(text, outputChannel) {
 
     function processSequenceFlow(line) {
         const trimmedLine = line.trim();
+        // outputChannel.appendLine(JSON.stringify(trimmedLine));
 
         // Handle sequence headers
         if (trimmedLine.startsWith('Sequence:')) {
@@ -44,7 +45,7 @@ function formatPtd(text, outputChannel) {
         }
 
         // function call (without arrow, only allowed after Sequence: line)
-        if (trimmedLine.match(/^[a-zA-Z]+\([^)]*\)\s*\[.*\]$/) && state.indentLevel === state.baseSequenceIndent + 1) {
+        if (trimmedLine.match(/^[a-zA-Z_$][a-zA-Z0-9_$]+\([^)]*\).*/) && state.indentLevel === state.baseSequenceIndent + 1) {
             state.indentLevel = state.baseSequenceIndent + 1;
             let result = getIndentedLine(line, state.indentLevel);
             state.indentLevel += 2; // for subsequent lines
