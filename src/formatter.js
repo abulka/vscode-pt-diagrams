@@ -1,4 +1,5 @@
 const vscode = require('vscode');
+const { getIndentedLine } = require('./getIndentLevel');
 
 function formatPtdSimple(text) {
     return '# hi andy\n' + text;
@@ -23,10 +24,6 @@ function formatPtd(text, outputChannel) {
         */
     };
 
-    function getIndentedLine(line, level) {
-        return ' '.repeat(level * 2) + line.trim();
-    }
-
     function processSection(line) {
         if (line.match(/^(Diagram|Files|Classes|Imports|Use Cases|Sequence):$/)) {
             state.currentSection = line.split(':')[0];
@@ -43,6 +40,7 @@ function formatPtd(text, outputChannel) {
 
     function processSequenceFlow(line) {
         const trimmedLine = line.trim();
+        const options = { increaseIndentAfter: 2 };
 
         // Handle sequence headers
         if (trimmedLine.startsWith('Sequence:')) {
@@ -54,21 +52,21 @@ function formatPtd(text, outputChannel) {
 
         // Handle function calls (without arrow, only allowed after Sequence: line)
         if (trimmedLine.match(/^[a-zA-Z_$][a-zA-Z0-9_$]+\([^)]*\).*/) && state.indentLevel === state.baseSequenceIndent + 1) {
-            let result = getIndentedLine(line, state.indentLevel);
+            let result = getIndentedLine(line, state.indentLevel, options);
             state.indentLevel += 1;
             return result;
         }
 
         // Handle function calls (with arrow)
         if (trimmedLine.match(/.*->\s*/)) {
-            let result = getIndentedLine(line, state.indentLevel);
+            let result = getIndentedLine(line, state.indentLevel, options);
             state.indentLevel += 1;
             return result;
         }
 
         // Handle return statements
         if (trimmedLine.startsWith('<')) {
-            let result = getIndentedLine(line, state.indentLevel);
+            let result = getIndentedLine(line, state.indentLevel, options);
             // Only dedent if not inside a block or if this is the last statement in a block
             if (state.sequenceBlockLevel <= 0 ||
                 (state.sequenceBlockLevel > 0 && isLastStatementInBlock(trimmedLine))) {
@@ -79,7 +77,7 @@ function formatPtd(text, outputChannel) {
 
         // Handle block start keywords ([if], [try], etc.)
         if (['[if', '[try', '[for', '[loop', '[while', '[switch'].some(keyword => trimmedLine.startsWith(keyword))) {
-            let result = getIndentedLine(line, state.indentLevel);
+            let result = getIndentedLine(line, state.indentLevel, options);
             state.blockIndentStack.push(state.indentLevel); // Push current indent before nesting
             state.indentLevel += 1;
             state.sequenceBlockLevel++;
@@ -93,7 +91,7 @@ function formatPtd(text, outputChannel) {
             }
             // Align [else] with its matching [if] by peeking the stack
             state.indentLevel = state.blockIndentStack[state.blockIndentStack.length - 1];
-            let result = getIndentedLine(line, state.indentLevel);
+            let result = getIndentedLine(line, state.indentLevel, options);
             state.indentLevel += 1; // Indent inside [else]
             return result;
         }
@@ -104,13 +102,11 @@ function formatPtd(text, outputChannel) {
                 state.sequenceBlockLevel--;
                 state.indentLevel = state.blockIndentStack.pop(); // Restore indent level of matching block start
             }
-            return getIndentedLine(line, state.indentLevel);
+            return getIndentedLine(line, state.indentLevel, options);
         }
 
-
-
         // For any other lines in the sequence
-        return getIndentedLine(line, state.indentLevel);
+        return getIndentedLine(line, state.indentLevel, options);
     }
 
     // Helper function to determine if this return statement is the last statement in a block
